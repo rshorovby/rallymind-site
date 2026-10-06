@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>SwingSync — AI tennis stroke analysis with live coach feedback</title>
+<meta name="description" content="Film your stroke on your phone and get an AI review tuned to your profile, experience and past videos on that stroke — with a staff coach adding live feedback. Forehand, backhand, serve, footwork, rally.">
+<meta name="theme-color" content="#17301F" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#10201A" media="(prefers-color-scheme: dark)">
+
+<link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+
+<link rel="preload" href="../assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+
+<!-- Open Graph: title/description/locale work everywhere; og:url, og:image,
+     canonical and hreflang need absolute URLs. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SwingSync">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:title" content="SwingSync — AI tennis stroke analysis with live coach feedback">
+<meta property="og:description" content="An AI review tuned to your profile, experience and past videos. Plus live feedback from a staff coach.">
+
+<!-- SITE-URL:BEGIN — absolute URLs that depend on the domain.
+     Until the domain is chosen this block stays commented out on purpose:
+     a canonical, og:url or hreflang pointing at a placeholder is worse than
+     having none. Uncomment and substitute in one command:
+       tools/set-domain.sh https://example.com -->
+<!--
+<meta property="og:url" content="__SITE_URL__/en/">
+<meta property="og:image" content="__SITE_URL__/assets/img/og-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SwingSync — AI tennis stroke analysis with live coach feedback">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="__SITE_URL__/en/">
+
+<link rel="alternate" hreflang="ru" href="__SITE_URL__/">
+<link rel="alternate" hreflang="en" href="__SITE_URL__/en/">
+<link rel="alternate" hreflang="x-default" href="__SITE_URL__/">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "SwingSync",
+  "url": "__SITE_URL__/en/",
+  "description": "AI tennis stroke analysis from video, tuned to your profile, experience and past reviews. A staff coach adds live feedback.",
+  "applicationCategory": "SportsApplication",
+  "operatingSystem": "Telegram, iOS",
+  "inLanguage": ["ru", "en"]
+}
+</script>
+-->
+<!-- SITE-URL:END -->
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ================= Header ================= -->
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">
+      <img src="../assets/img/logo-96.png" alt="" width="32" height="32">
+      SwingSync
+    </a>
+
+    <nav class="header-nav" aria-label="Page sections">
+      <a href="#how">How it works</a>
+      <a href="#inside">What's inside</a>
+      <a href="#fit">Who it's for</a>
+      <a href="#faq">Questions</a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="lang-switch" role="group" aria-label="Site language">
+        <a href="../index.html" hreflang="ru" lang="ru">RU</a>
+        <span aria-current="true">EN</span>
+      </div>
+      <a class="btn btn-primary" href="https://t.me/RallyCoachAI_bot?start=web_en" target="_blank" rel="noopener">
+        <span class="label-full">Open in Telegram</span>
+        <span class="label-short">Telegram</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ================= Hero ================= -->
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-card">
+      <svg class="hero-lines" viewBox="0 0 800 500" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="2" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+        <rect x="60" y="70" width="680" height="360"></rect>
+        <rect x="110" y="70" width="580" height="360"></rect>
+        <line x1="400" y1="70" x2="400" y2="430"></line>
+        <line x1="60" y1="150" x2="740" y2="150"></line>
+        <line x1="60" y1="350" x2="740" y2="350"></line>
+        <line x1="400" y1="150" x2="400" y2="350"></line>
+      </svg>
+
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow"><span class="icon icon-ball" aria-hidden="true"></span>AI review · tennis</span>
+
+          <h1>AI stroke analysis that knows your context</h1>
+
+          <p class="hero-lead">
+            Film your stroke on your phone — the model reads it against your profile: level,
+            experience, hand and how often you play, plus your earlier videos on that stroke.
+            A staff coach reads the review and adds live feedback.
+            Film it again and see what changed.
+          </p>
+
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="https://t.me/RallyCoachAI_bot?start=web_en" target="_blank" rel="noopener">Open in Telegram</a>
+            <a class="btn btn-ghost-dark" href="https://t.me/RallyCoachAI_bot?start=web_ios_en" target="_blank" rel="noopener">
+              <img src="../assets/img/logo-96.png" alt="" width="20" height="20" style="border-radius:6px">
+              Follow the iOS app
+            </a>
+          </div>
+
+          <p class="hero-note">
+            <span class="icon icon-check" aria-hidden="true"></span>
+            Reviews are free during the open beta. iPhone app coming soon.
+          </p>
+        </div>
+
+        <div class="phone">
+          <div class="phone-screen">
+            <img src="../assets/img/screen-home_en.webp"
+                 alt="SwingSync home screen: a finished stroke review, the send-video button and key progress meters"
+                 width="1179" height="2556" fetchpriority="high" decoding="async">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Numbers =================
+     Hidden until STATS is filled in ../assets/site.js. -->
+
+<section class="section" id="stats" hidden>
+  <div class="container">
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-value" data-stat="players">—</span>
+        <span class="stat-label" data-stat-label="players">players</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" data-stat="analyses">—</span>
+        <span class="stat-label" data-stat-label="analyses">reviews</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" data-stat="score">—</span>
+        <span class="stat-label" data-stat-label="score">average stroke score</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Sound familiar ================= -->
+
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker"><span class="icon icon-eye" aria-hidden="true"></span>Sound familiar?</span>
+      <h2 class="section-title">You film yourself — and still can't tell what to fix</h2>
+      <p class="section-lead">Three reasons practice footage rarely turns into progress.</p>
+    </div>
+
+    <div class="pains reveal">
+      <p class="pain">You watched your own video and couldn't tell what was wrong — it looks roughly the way it should.</p>
+      <p class="pain">Advice from YouTube is about someone else's stroke. It doesn't transfer to yours.</p>
+      <p class="pain">A month of practice later, you can't tell whether you improved or what changed at all.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= How it works ================= -->
+
+<section class="section" id="how">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker"><span class="icon icon-ball" aria-hidden="true"></span>How it works</span>
+      <h2 class="section-title">Three steps, no gear and no editing</h2>
+    </div>
+
+    <div class="steps reveal">
+      <article class="step">
+        <span class="step-num">01</span>
+        <h3>Film 10–30 seconds</h3>
+        <p>One stroke, phone to the side or behind you at waist height. Your phone camera is enough — no tripod, no second person.</p>
+      </article>
+      <article class="step">
+        <span class="step-num">02</span>
+        <h3>Get the review</h3>
+        <p>The AI reads your stroke against your profile and your earlier videos on that stroke: what's off, why it matters and what to do. A staff coach reads the review and adds live feedback.</p>
+      </article>
+      <article class="step">
+        <span class="step-num">03</span>
+        <h3>Film the same stroke again</h3>
+        <p>The review remembers your earlier videos, your current focus and recurring issues. You see a trend, not a one-off tip.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= What's inside ================= -->
+
+<section class="section" id="inside">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker"><span class="icon icon-target" aria-hidden="true"></span>What's inside</span>
+      <h2 class="section-title">Not a “technique score” — work on one stroke at a time</h2>
+      <p class="section-lead">The product walks a single stroke through the loop: note, drill, next video.</p>
+    </div>
+
+    <div class="cards reveal">
+      <article class="card">
+        <span class="card-icon card-icon-court"><span class="icon icon-ai" aria-hidden="true"></span></span>
+        <h3>AI review with your context</h3>
+        <p>The model watches your video and knows your profile: level, experience, hand and how often you play. Not average advice from the internet — a review of your game.</p>
+      </article>
+      <article class="card">
+        <span class="card-icon card-icon-process"><span class="icon icon-eye" aria-hidden="true"></span></span>
+        <h3>Memory of past reviews</h3>
+        <p>Each review sees your earlier sessions on that stroke, your focus — it stays until the stroke improves — and your recurring issues. So it doesn't start from zero.</p>
+      </article>
+      <article class="card">
+        <span class="card-icon card-icon-done"><span class="icon icon-check" aria-hidden="true"></span></span>
+        <h3>Live coach feedback</h3>
+        <p>A staff coach reads the AI review and adds what only a human sees. Until they do, the review is marked “In review”.</p>
+      </article>
+      <article class="card">
+        <span class="card-icon"><span class="icon icon-racket" aria-hidden="true"></span></span>
+        <h3>Six strokes</h3>
+        <p>Forehand, backhand, serve, net, footwork, rally. Progress is tracked per stroke — a serve is never compared to a forehand.</p>
+      </article>
+      <article class="card">
+        <span class="card-icon"><span class="icon icon-ball" aria-hidden="true"></span></span>
+        <h3>Drills from the catalog</h3>
+        <p>Every note comes with drills you can take to your next practice, each with a description and a link.</p>
+      </article>
+      <article class="card">
+        <span class="card-icon card-icon-done"><span class="icon icon-trend" aria-hidden="true"></span></span>
+        <h3>History and progress</h3>
+        <p>Scores per stroke, coverage and your NTRP level. You see what's growing, what's stuck and which stroke needs more footage.</p>
+      </article>
+    </div>
+
+    <div class="segments reveal">
+      <span class="chip"><span class="icon icon-seg-forehand" aria-hidden="true"></span>Forehand</span>
+      <span class="chip"><span class="icon icon-seg-backhand" aria-hidden="true"></span>Backhand</span>
+      <span class="chip"><span class="icon icon-seg-serve" aria-hidden="true"></span>Serve</span>
+      <span class="chip"><span class="icon icon-seg-volley" aria-hidden="true"></span>Net / volley</span>
+      <span class="chip"><span class="icon icon-seg-footwork" aria-hidden="true"></span>Footwork</span>
+      <span class="chip"><span class="icon icon-seg-rally" aria-hidden="true"></span>Rally</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Screens =================
+     Screenshots are shot in both locales: screen-<screen>_ru / _en.
+     Ratio 1179×2556 (iPhone 15 Pro), no phone frame — the frame is in the markup.
+     The page serves WebP from assets/img; the source PNGs live in screens/.
+     After re-shooting, rebuild the WebP: tools/make-webp.sh -->
+
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker"><span class="icon icon-video" aria-hidden="true"></span>Screens</span>
+      <h2 class="section-title">What it looks like</h2>
+    </div>
+
+    <div class="shots reveal">
+      <figure class="shot">
+        <div class="phone">
+          <div class="phone-screen">
+            <img src="../assets/img/screen-home_en.webp"
+                 alt="SwingSync home screen: a finished stroke review and key progress meters"
+                 width="1179" height="2556" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <figcaption>Home</figcaption>
+      </figure>
+
+      <figure class="shot">
+        <div class="phone">
+          <div class="phone-screen">
+            <img src="../assets/img/screen-video_en.webp"
+                 alt="Video upload in SwingSync: trimming the clip and sending it for review"
+                 width="1179" height="2556" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <figcaption>Video</figcaption>
+      </figure>
+
+      <figure class="shot">
+        <div class="phone">
+          <div class="phone-screen">
+            <img src="../assets/img/screen-result_en.webp"
+                 alt="Stroke review in SwingSync: AI notes and how to fix them"
+                 width="1179" height="2556" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <figcaption>Review</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Who it's for ================= -->
+
+<section class="section" id="fit">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker"><span class="icon icon-shield" aria-hidden="true"></span>Straight up</span>
+      <h2 class="section-title">Who it's for, and who it isn't</h2>
+      <p class="section-lead">We review video; we don't replace on-court coaching. Better to say that up front.</p>
+    </div>
+
+    <div class="fit reveal">
+      <article class="fit-card fit-yes">
+        <h3>It fits you if</h3>
+        <ul class="fit-list">
+          <li><span class="icon icon-check" aria-hidden="true"></span>You play regularly and film yourself at least sometimes.</li>
+          <li><span class="icon icon-check" aria-hidden="true"></span>You want to know exactly what to fix, not just “move your feet more”.</li>
+          <li><span class="icon icon-check" aria-hidden="true"></span>You're willing to film the same stroke several times to see a trend.</li>
+        </ul>
+      </article>
+
+      <article class="fit-card fit-no">
+        <h3>It doesn't fit you if</h3>
+        <ul class="fit-list">
+          <li><span class="icon icon-close" aria-hidden="true"></span>You want live on-court coaching — that's a different format and we don't replace it.</li>
+          <li><span class="icon icon-close" aria-hidden="true"></span>You don't want a human coach's input — automated analysis alone is enough for you.</li>
+          <li><span class="icon icon-close" aria-hidden="true"></span>You're not comfortable filming yourself and reviewing your own technique.</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker"><span class="icon icon-ball" aria-hidden="true"></span>Common questions</span>
+      <h2 class="section-title">Questions</h2>
+    </div>
+
+    <div class="faq reveal">
+      <details open>
+        <summary>How is this different from ChatGPT or other AI analysis?</summary>
+        <div class="faq-body">
+          The review is made by a model that knows your context: your profile (level, experience, hand, how often you play), your earlier videos on that stroke, your current focus and recurring issues, plus a knowledge base on technique. On top of it — live feedback from a staff coach. ChatGPT has neither your history nor a coach watching the analysis.
+        </div>
+      </details>
+
+      <details>
+        <summary>Do I need Telegram?</summary>
+        <div class="faq-body">
+          For now, yes: the Telegram bot is the live channel. The iPhone app is in development — it will add push notifications when a review is ready and keep a copy of your video on the device. You can register interest from the bot: tap “Follow the iOS app”.
+        </div>
+      </details>
+
+      <details>
+        <summary>How long does a review take?</summary>
+        <div class="faq-body">
+          The AI review appears right after you upload the video. Coach feedback takes up to 24 hours, usually faster. If the coach doesn't get to it in time, the review is still delivered to you.
+        </div>
+      </details>
+
+      <details>
+        <summary>What should I film, and how?</summary>
+        <div class="faq-body">
+          10–30 seconds, one stroke, phone to the side or behind you at waist height. You don't need a whole rally: the shorter the clip, the more precise the review. The review then tells you what to film next.
+        </div>
+      </details>
+
+      <details>
+        <summary>How much does it cost?</summary>
+        <div class="faq-body">
+          The product is in open beta and reviews are free right now. When pricing arrives, the first review will stay free — you should see what the product actually gives you before paying for it.
+        </div>
+      </details>
+
+      <details>
+        <summary>What happens to my videos?</summary>
+        <div class="faq-body">
+          We don't keep videos on our server: the file is deleted after the review. In Telegram it stays in your chat with the bot — you can clear that any time.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Final CTA ================= -->
+
+<section class="section section-last">
+  <div class="container">
+    <div class="final-cta reveal">
+      <svg class="hero-lines" viewBox="0 0 800 500" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="2" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+        <rect x="60" y="70" width="680" height="360"></rect>
+        <line x1="400" y1="70" x2="400" y2="430"></line>
+        <line x1="60" y1="150" x2="740" y2="150"></line>
+        <line x1="60" y1="350" x2="740" y2="350"></line>
+        <line x1="400" y1="150" x2="400" y2="350"></line>
+      </svg>
+
+      <h2>The AI breaks down your stroke — a coach adds to it</h2>
+      <p>Open the bot, send a 10–30 second clip and pick the stroke. The AI review lands right away, coach feedback follows.</p>
+
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://t.me/RallyCoachAI_bot?start=web_en" target="_blank" rel="noopener">Open in Telegram</a>
+        <a class="btn btn-ghost-dark" href="https://t.me/RallyCoachAI_bot?start=web_ios_en" target="_blank" rel="noopener">
+          <img src="../assets/img/logo-96.png" alt="" width="20" height="20" style="border-radius:6px">
+          Follow the iOS app
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= Footer ================= -->
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <a class="footer-brand" href="index.html">
+        <img src="../assets/img/logo-96.png" alt="" width="28" height="28">
+        SwingSync
+      </a>
+
+      <nav class="footer-links" aria-label="Links">
+        <a href="https://t.me/RallyCoachAI_bot" target="_blank" rel="noopener">Telegram bot</a>
+        <a href="https://t.me/RallyCoachAI_bot?start=web_ios_en" target="_blank" rel="noopener">iOS app</a>
+        <a href="#faq">Questions</a>
+        <a href="../index.html" hreflang="ru" lang="ru">Русский</a>
+      </nav>
+    </div>
+
+    <p class="footer-legal">
+      © <span data-year>2026</span> SwingSync. Tennis stroke reviews.
+      <!-- TO REPLACE at deploy: add the privacy policy link once the page exists:
+           <a href="../privacy.html">Privacy policy</a> -->
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

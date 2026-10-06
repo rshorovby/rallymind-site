@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>SwingSync — ИИ-разбор техники тенниса и живой комментарий тренера</title>
+<meta name="description" content="Снимаешь удар на телефон — получаешь ИИ-разбор с учётом анкеты, стажа и прошлых видео по этому удару, а штатный тренер дополняет его живым комментарием. Форхенд, бэкхенд, подача, ноги, розыгрыш.">
+<meta name="theme-color" content="#17301F" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#10201A" media="(prefers-color-scheme: dark)">
+
+<link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+
+<link rel="preload" href="assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
+
+<!-- Открытые графы: title/description/locale работают всегда,
+     а og:url, og:image, canonical и hreflang требуют абсолютного адреса. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SwingSync">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:title" content="SwingSync — ИИ-разбор техники тенниса и живой комментарий тренера">
+<meta property="og:description" content="ИИ-разбор с учётом твоей анкеты, стажа и прошлых видео. Плюс живой комментарий штатного тренера.">
+
+<!-- SITE-URL:BEGIN — абсолютные адреса, зависящие от домена.
+     Пока он не выбран, блок закомментирован намеренно: canonical,
+     og:url и hreflang с заглушкой хуже, чем их отсутствие.
+     Раскомментировать и подставить домен одной командой:
+       tools/set-domain.sh https://example.com -->
+<!--
+<meta property="og:url" content="__SITE_URL__/">
+<meta property="og:image" content="__SITE_URL__/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SwingSync — ИИ-разбор техники тенниса и живой комментарий тренера">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="__SITE_URL__/">
+
+<link rel="alternate" hreflang="ru" href="__SITE_URL__/">
+<link rel="alternate" hreflang="en" href="__SITE_URL__/en/">
+<link rel="alternate" hreflang="x-default" href="__SITE_URL__/">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "SwingSync",
+  "url": "__SITE_URL__/",
+  "description": "ИИ-разбор техники тенниса по видео с учётом анкеты, стажа и прошлых разборов. Штатный тренер дополняет разбор живым комментарием.",
+  "applicationCategory": "SportsApplication",
+  "operatingSystem": "Telegram, iOS",
+  "inLanguage": ["ru", "en"]
+}
+</script>
+-->
+<!-- SITE-URL:END -->
+</head>
+<body>
+
+<a class="skip-link" href="#main">К содержанию</a>
+
+<!-- ================= Шапка ================= -->
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">
+      <img src="assets/img/logo-96.png" alt="" width="32" height="32">
+      SwingSync
+    </a>
+
+    <nav class="header-nav" aria-label="Разделы страницы">
+      <a href="#how">Как это работает</a>
+      <a href="#inside">Что внутри</a>
+      <a href="#fit">Кому подходит</a>
+      <a href="#faq">Вопросы</a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="lang-switch" role="group" aria-label="Язык сайта">
+        <span aria-current="true">RU</span>
+        <a href="en/index.html" hreflang="en" lang="en">EN</a>
+      </div>
+      <a class="btn btn-primary" href="https://t.me/RallyCoachAI_bot?start=web" target="_blank" rel="noopener">
+        <span class="label-full">Открыть в Telegram</span>
+        <span class="label-short">Telegram</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ================= Hero ================= -->
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-card">
+      <svg class="hero-lines" viewBox="0 0 800 500" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="2" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+        <rect x="60" y="70" width="680" height="360"></rect>
+        <rect x="110" y="70" width="580" height="360"></rect>
+        <line x1="400" y1="70" x2="400" y2="430"></line>
+        <line x1="60" y1="150" x2="740" y2="150"></line>
+        <line x1="60" y1="350" x2="740" y2="350"></line>
+        <line x1="400" y1="150" x2="400" y2="350"></line>
+      </svg>
+
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow"><span class="icon icon-ball" aria-hidden="true"></span>ИИ-разбор · теннис</span>
+
+          <h1>ИИ-разбор удара, который знает твой контекст</h1>
+
+          <p class="hero-lead">
+            Снимаешь удар на телефон — модель разбирает его с учётом анкеты: уровня, стажа,
+            руки и частоты тренировок, а также прошлых видео по этому удару.
+            Штатный тренер читает разбор и дополняет его живым комментарием.
+            Следующее видео показывает, что изменилось.
+          </p>
+
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="https://t.me/RallyCoachAI_bot?start=web" target="_blank" rel="noopener">Открыть в Telegram</a>
+            <a class="btn btn-ghost-dark" href="https://t.me/RallyCoachAI_bot?start=web_ios" target="_blank" rel="noopener">
+              <img src="assets/img/logo-96.png" alt="" width="20" height="20" style="border-radius:6px">
+              Следить за iOS
+            </a>
+          </div>
+
+          <p class="hero-note">
+            <span class="icon icon-check" aria-hidden="true"></span>
+            Разборы бесплатны в открытой бете. Приложение для iPhone — скоро.
+          </p>
+        </div>
+
+        <div class="phone">
+          <div class="phone-screen">
+            <img src="assets/img/screen-home_ru.webp"
+                 alt="Главная в SwingSync: готовый разбор удара, кнопка отправки видео и ключевые шкалы прогресса"
+                 width="1179" height="2556" fetchpriority="high" decoding="async">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Цифры =================
+     Секция скрыта, пока в assets/site.js не заполнен объект STATS.
+     Значения не выдумываем: пусто — блока нет. -->
+
+<section class="section" id="stats" hidden>
+  <div class="container">
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-value" data-stat="players">—</span>
+        <span class="stat-label" data-stat-label="players">игроков</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" data-stat="analyses">—</span>
+        <span class="stat-label" data-stat-label="analyses">разборов</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" data-stat="score">—</span>
+        <span class="stat-label" data-stat-label="score">средняя оценка удара</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Знакомо ================= -->
+
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker"><span class="icon icon-eye" aria-hidden="true"></span>Знакомо?</span>
+      <h2 class="section-title">Снимаешь себя — и непонятно, что именно исправлять</h2>
+      <p class="section-lead">Три причины, по которым видео с тренировки обычно не превращается в прогресс.</p>
+    </div>
+
+    <div class="pains reveal">
+      <p class="pain">Посмотрел своё видео и не понял, что не так: вроде похоже на то, как играют нормально.</p>
+      <p class="pain">Советы из роликов — про чужой удар. Примерить их на себя не получается.</p>
+      <p class="pain">Через месяц занятий непонятно, стало ли лучше и что вообще изменилось.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Как это работает ================= -->
+
+<section class="section" id="how">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker"><span class="icon icon-ball" aria-hidden="true"></span>Как это работает</span>
+      <h2 class="section-title">Три шага, без оборудования и монтажа</h2>
+    </div>
+
+    <div class="steps reveal">
+      <article class="step">
+        <span class="step-num">01</span>
+        <h3>Снимаешь 10–30 секунд</h3>
+        <p>Один удар, телефон сбоку или сзади на уровне пояса. Хватит камеры телефона — ни штатива, ни второго человека.</p>
+      </article>
+      <article class="step">
+        <span class="step-num">02</span>
+        <h3>Получаешь разбор</h3>
+        <p>ИИ разбирает удар с учётом твоей анкеты и прошлых видео по этому удару: что не так, почему это важно и что делать. Штатный тренер читает разбор и дополняет его живым комментарием.</p>
+      </article>
+      <article class="step">
+        <span class="step-num">03</span>
+        <h3>Снимаешь тот же удар снова</h3>
+        <p>Разбор помнит твои прошлые видео, текущий фокус и повторяющиеся ошибки. Видно динамику, а не разовый совет.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Что внутри ================= -->
+
+<section class="section" id="inside">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker"><span class="icon icon-target" aria-hidden="true"></span>Что внутри</span>
+      <h2 class="section-title">Не «оценка техники», а работа над конкретным ударом</h2>
+      <p class="section-lead">Продукт ведёт один удар за раз — от замечания до упражнения и следующей съёмки.</p>
+    </div>
+
+    <div class="cards reveal">
+      <article class="card">
+        <span class="card-icon card-icon-court"><span class="icon icon-ai" aria-hidden="true"></span></span>
+        <h3>ИИ-разбор с контекстом</h3>
+        <p>Модель смотрит видео и знает твою анкету: уровень, стаж, руку и частоту тренировок. Это не средние советы из интернета, а разбор про твою игру.</p>
+      </article>
+      <article class="card">
+        <span class="card-icon card-icon-process"><span class="icon icon-eye" aria-hidden="true"></span></span>
+        <h3>Память о прошлых разборах</h3>
+        <p>Разбор видит прошлые сессии по этому удару, твой фокус — он не меняется, пока нет улучшения, — и хронические ошибки. Поэтому он не начинается с нуля.</p>
+      </article>
+      <article class="card">
+        <span class="card-icon card-icon-done"><span class="icon icon-check" aria-hidden="true"></span></span>
+        <h3>Живой комментарий тренера</h3>
+        <p>Штатный тренер читает ИИ-разбор и дополняет его тем, что видно только человеку. Пока он не посмотрел, разбор помечен «На супервизии».</p>
+      </article>
+      <article class="card">
+        <span class="card-icon"><span class="icon icon-racket" aria-hidden="true"></span></span>
+        <h3>Шесть ударов</h3>
+        <p>Форхенд, бэкхенд, подача, у сетки, ноги, розыгрыш. Прогресс считается по каждому отдельно — подачу не сравнивают с форхендом.</p>
+      </article>
+      <article class="card">
+        <span class="card-icon"><span class="icon icon-ball" aria-hidden="true"></span></span>
+        <h3>Упражнения из каталога</h3>
+        <p>К замечанию прикладываются упражнения, которые можно сделать на ближайшей тренировке. С описанием и ссылкой.</p>
+      </article>
+      <article class="card">
+        <span class="card-icon card-icon-done"><span class="icon icon-trend" aria-hidden="true"></span></span>
+        <h3>История и прогресс</h3>
+        <p>Оценки по ударам, изученность и уровень NTRP. Видно, что растёт, а что стоит на месте — и по какому удару мало видео.</p>
+      </article>
+    </div>
+
+    <div class="segments reveal">
+      <span class="chip"><span class="icon icon-seg-forehand" aria-hidden="true"></span>Форхенд</span>
+      <span class="chip"><span class="icon icon-seg-backhand" aria-hidden="true"></span>Бэкхенд</span>
+      <span class="chip"><span class="icon icon-seg-serve" aria-hidden="true"></span>Подача</span>
+      <span class="chip"><span class="icon icon-seg-volley" aria-hidden="true"></span>У сетки</span>
+      <span class="chip"><span class="icon icon-seg-footwork" aria-hidden="true"></span>Ноги</span>
+      <span class="chip"><span class="icon icon-seg-rally" aria-hidden="true"></span>Розыгрыш</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Экраны =================
+     Скриншоты сняты в обеих локалях: screen-<экран>_ru / _en.
+     Пропорции 1179×2556 (iPhone 15 Pro), без рамки телефона — рамка в вёрстке.
+     На странице — WebP из assets/img, исходные PNG лежат в screens/.
+     После пересъёмки пересобрать WebP: tools/make-webp.sh -->
+
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker"><span class="icon icon-video" aria-hidden="true"></span>Экраны</span>
+      <h2 class="section-title">Как это выглядит</h2>
+    </div>
+
+    <div class="shots reveal">
+      <figure class="shot">
+        <div class="phone">
+          <div class="phone-screen">
+            <img src="assets/img/screen-home_ru.webp"
+                 alt="Главная в SwingSync: готовый разбор удара и ключевые шкалы"
+                 width="1179" height="2556" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <figcaption>Главная</figcaption>
+      </figure>
+
+      <figure class="shot">
+        <div class="phone">
+          <div class="phone-screen">
+            <img src="assets/img/screen-video_ru.webp"
+                 alt="Загрузка видео в SwingSync: обрезка клипа и отправка на разбор"
+                 width="1179" height="2556" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <figcaption>Видео</figcaption>
+      </figure>
+
+      <figure class="shot">
+        <div class="phone">
+          <div class="phone-screen">
+            <img src="assets/img/screen-result_ru.webp"
+                 alt="Разбор удара в SwingSync: замечания ИИ и как их исправить"
+                 width="1179" height="2556" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <figcaption>Разбор</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Кому подходит ================= -->
+
+<section class="section" id="fit">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker"><span class="icon icon-shield" aria-hidden="true"></span>Честно</span>
+      <h2 class="section-title">Кому подходит, а кому нет</h2>
+      <p class="section-lead">Мы разбираем видео, а не заменяем занятия с тренером на корте. Лучше сказать это сразу.</p>
+    </div>
+
+    <div class="fit reveal">
+      <article class="fit-card fit-yes">
+        <h3>Подойдёт, если</h3>
+        <ul class="fit-list">
+          <li><span class="icon icon-check" aria-hidden="true"></span>Ты играешь регулярно и хотя бы иногда снимаешь себя на телефон.</li>
+          <li><span class="icon icon-check" aria-hidden="true"></span>Хочешь понимать, что именно исправлять, а не «больше работать ногами».</li>
+          <li><span class="icon icon-check" aria-hidden="true"></span>Готов снимать один и тот же удар несколько раз, чтобы увидеть динамику.</li>
+        </ul>
+      </article>
+
+      <article class="fit-card fit-no">
+        <h3>Не подойдёт, если</h3>
+        <ul class="fit-list">
+          <li><span class="icon icon-close" aria-hidden="true"></span>Нужны живые занятия с тренером на корте — это другой формат, мы его не заменяем.</li>
+          <li><span class="icon icon-close" aria-hidden="true"></span>Не нужен комментарий живого тренера — хватит автоматического разбора.</li>
+          <li><span class="icon icon-close" aria-hidden="true"></span>Не готов снимать себя и разбирать свою технику по видео.</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker"><span class="icon icon-ball" aria-hidden="true"></span>Частые вопросы</span>
+      <h2 class="section-title">Вопросы</h2>
+    </div>
+
+    <div class="faq reveal">
+      <details open>
+        <summary>Чем это отличается от ChatGPT и других ИИ-разборов?</summary>
+        <div class="faq-body">
+          Разбор делает модель, которая знает твой контекст: анкету (уровень, стаж, руку, частоту тренировок), прошлые видео по этому удару, текущий фокус и хронические ошибки, плюс базу знаний по технике. Поверх разбора — живой комментарий штатного тренера. У ChatGPT нет ни твоей истории, ни тренера, который смотрит за разбором.
+        </div>
+      </details>
+
+      <details>
+        <summary>Нужен ли Telegram?</summary>
+        <div class="faq-body">
+          Сейчас да: канал — Telegram-бот. Приложение для iPhone в разработке; там будет то же самое плюс пуши о готовом разборе и копия видео на устройстве. Оставить заявку на приложение можно в боте — нажми «Следить за iOS».
+        </div>
+      </details>
+
+      <details>
+        <summary>Сколько ждать разбор?</summary>
+        <div class="faq-body">
+          ИИ-разбор появляется сразу после загрузки видео. Комментарий тренера занимает до 24 часов — обычно быстрее. Если тренер не успевает, разбор всё равно отдаётся тебе по таймауту.
+        </div>
+      </details>
+
+      <details>
+        <summary>Что и как снимать?</summary>
+        <div class="faq-body">
+          10–30 секунд, один удар, телефон сбоку или сзади на уровне пояса. Не нужно снимать весь розыгрыш: чем короче клип, тем точнее разбор. Дальше разбор сам подскажет, что снять следующим.
+        </div>
+      </details>
+
+      <details>
+        <summary>Сколько это стоит?</summary>
+        <div class="faq-body">
+          Сейчас продукт в открытой бете, и разборы бесплатны. Когда появятся тарифы, первый разбор останется бесплатным: сначала нужно увидеть, что продукт реально даёт.
+        </div>
+      </details>
+
+      <details>
+        <summary>Что происходит с моими видео?</summary>
+        <div class="faq-body">
+          На нашем сервере видео не хранится: после разбора файл удаляется. В Telegram он остаётся в переписке с ботом — её можно очистить в любой момент.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Финальный CTA ================= -->
+
+<section class="section section-last">
+  <div class="container">
+    <div class="final-cta reveal">
+      <svg class="hero-lines" viewBox="0 0 800 500" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="2" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+        <rect x="60" y="70" width="680" height="360"></rect>
+        <line x1="400" y1="70" x2="400" y2="430"></line>
+        <line x1="60" y1="150" x2="740" y2="150"></line>
+        <line x1="60" y1="350" x2="740" y2="350"></line>
+        <line x1="400" y1="150" x2="400" y2="350"></line>
+      </svg>
+
+      <h2>Сними удар — ИИ разберёт, тренер дополнит</h2>
+      <p>Открой бота, пришли клип на 10–30 секунд и выбери удар. ИИ-разбор придёт сразу, комментарий тренера — следом.</p>
+
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://t.me/RallyCoachAI_bot?start=web" target="_blank" rel="noopener">Открыть в Telegram</a>
+        <a class="btn btn-ghost-dark" href="https://t.me/RallyCoachAI_bot?start=web_ios" target="_blank" rel="noopener">
+          <img src="assets/img/logo-96.png" alt="" width="20" height="20" style="border-radius:6px">
+          Следить за iOS
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= Футер ================= -->
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <a class="footer-brand" href="index.html">
+        <img src="assets/img/logo-96.png" alt="" width="28" height="28">
+        SwingSync
+      </a>
+
+      <nav class="footer-links" aria-label="Ссылки">
+        <a href="https://t.me/RallyCoachAI_bot" target="_blank" rel="noopener">Telegram-бот</a>
+        <a href="https://t.me/RallyCoachAI_bot?start=web_ios" target="_blank" rel="noopener">Приложение для iOS</a>
+        <a href="#faq">Вопросы</a>
+        <a href="en/index.html" hreflang="en" lang="en">English</a>
+      </nav>
+    </div>
+
+    <p class="footer-legal">
+      © <span data-year>2026</span> SwingSync. Разборы техники тенниса.
+      <!-- ЗАМЕНИТЬ при деплое: добавить ссылку на политику конфиденциальности,
+           когда страница появится:
+           <a href="privacy.html">Политика конфиденциальности</a> -->
+    </p>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

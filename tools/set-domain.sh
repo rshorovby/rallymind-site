@@ -1,0 +1,149 @@
+#!/bin/bash
+# =========================================================
+# Подстановка домена: закрывает деплой-подготовку одной командой.
+#
+# Запуск из корня проекта:
+#   tools/set-domain.sh https://example.com
+#
+# Что делает:
+#   1. в index.html и en/index.html раскомментирует блок между
+#      SITE-URL:BEGIN и SITE-URL:END и подставит домен вместо __SITE_URL__
+#      (og:url, og:image, og:image:alt, twitter:card, canonical, hreflang, JSON-LD);
+#   2. создаст robots.txt и sitemap.xml с абсолютными адресами.
+#
+# Скрипт можно запускать повторно — например, при переезде с
+# github.io на свой домен: он заменит прежний адрес на новый.
+#
+# Почему блок был закомментирован: canonical и og:url с заглушкой
+# хуже, чем их отсутствие, — поисковик может счесть страницу
+# дублем несуществующего адреса. До выбора домена они выключены.
+# =========================================================
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+if [ $# -ne 1 ]; then
+  echo "Использование: tools/set-domain.sh https://example.com" >&2
+  exit 1
+fi
+
+SITE_URL="${1%/}"
+
+case "$SITE_URL" in
+  https://*|http://*) ;;
+  *) echo "Адрес должен начинаться с https:// или http://" >&2; exit 1 ;;
+esac
+
+case "$SITE_URL" in
+  https://|http://) echo "Адрес пустой: нужен домен, например https://swingsync.app" >&2; exit 1 ;;
+esac
+
+SITE_URL="$SITE_URL" python3 - <<'PY'
+import os
+import re
+import sys
+
+site = os.environ["SITE_URL"]
+BEGIN = "SITE-URL:BEGIN"
+END = "SITE-URL:END"
+
+
+def process(path, locale):
+    """locale — путь локали внутри сайта: '/' для ru, '/en/' для en."""
+    lines = open(path, encoding="utf-8").read().split("\n")
+
+    try:
+        begin = next(i for i, l in enumerate(lines) if BEGIN in l)
+        end = next(i for i, l in enumerate(lines) if END in l)
+    except StopIteration:
+        sys.exit(f"{path}: не найден блок {BEGIN}…{END}")
+
+    block = lines[begin + 1:end]
+    commented = bool(block) and block[0].strip() == "<!--"
+
+    kept = [l for l in block if l.strip() not in ("<!--", "-->")] if commented else block
+
+    # Заглушку меняем на первом запуске, прежний адрес — при повторном.
+    if any("__SITE_URL__" in l for l in kept):
+        kept = [l.replace("__SITE_URL__", site) for l in kept]
+        mode = "подставлен домен"
+    else:
+        canonical = None
+        for l in kept:
+            match = re.search(r'rel="canonical" href="([^"]+)"', l)
+            if match:
+                canonical = match.group(1)
+                break
+        if not canonical or not canonical.endswith(locale):
+            sys.exit(f"{path}: не нашёл прежний canonical с путём {locale}")
+
+        # Меняем только базовую часть: путь локали должен остаться на месте,
+        # иначе /en/ при переезде превратится в корень.
+        previous_base = canonical[:-len(locale)]
+        kept = [l.replace(previous_base, site) for l in kept]
+        mode = f"заменён прежний адрес {previous_base}"
+
+    if any("__SITE_URL__" in l for l in kept):
+        sys.exit(f"{path}: осталась заглушка __SITE_URL__")
+
+    open(path, "w", encoding="utf-8").write(
+        "\n".join(lines[:begin + 1] + kept + lines[end:])
+    )
+
+    live = [l for l in kept if l.strip() and not l.strip().startswith("<!--")]
+    print(f"  {path}: {mode}, рабочих строк — {len(live)}")
+
+
+for path, locale in (("index.html", "/"), ("en/index.html", "/en/")):
+    process(path, locale)
+
+robots = f"""User-agent: *
+Allow: /
+
+# Эти папки на сайте не используются: fonts/ и tools/ — исходники,
+# screens/ и preview/ — материалы для сборки и ревью. При деплое их
+# копировать не нужно, но если уедут — пусть не попадают в индекс.
+Disallow: /fonts/
+Disallow: /tools/
+Disallow: /screens/
+Disallow: /preview/
+
+Sitemap: {site}/sitemap.xml
+"""
+open("robots.txt", "w", encoding="utf-8").write(robots)
+
+alternates = f"""    <xhtml:link rel="alternate" hreflang="ru" href="{site}/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="{site}/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="{site}/"/>"""
+
+sitemap = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>{site}/</loc>
+{alternates}
+  </url>
+  <url>
+    <loc>{site}/en/</loc>
+{alternates}
+  </url>
+</urlset>
+"""
+open("sitemap.xml", "w", encoding="utf-8").write(sitemap)
+print("  создано: robots.txt, sitemap.xml")
+PY
+
+echo
+echo "Проверка:"
+if grep -rn "__SITE_URL__" index.html en/index.html robots.txt sitemap.xml; then
+  echo "  ОШИБКА: остались заглушки" >&2
+  exit 1
+fi
+echo "  заглушек не осталось"
+echo "  canonical (ru): $(grep -o 'rel="canonical" href="[^"]*"' index.html | head -1 | sed 's/.*href="//;s/"//')"
+echo "  canonical (en): $(grep -o 'rel="canonical" href="[^"]*"' en/index.html | head -1 | sed 's/.*href="//;s/"//')"
+echo "  адресов в sitemap: $(grep -c '<loc>' sitemap.xml)"
+echo
+echo "Дальше: открыть страницу локально, затем проверить превью ссылки в Telegram —"
+echo "он кеширует его надолго, поэтому лучше убедиться сразу."

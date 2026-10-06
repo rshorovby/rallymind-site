@@ -1,0 +1,939 @@
+/* =========================================================
+   ЛЕНДИНГ RALLYMIND
+   Подключается после tokens.css. Палитра, радиусы, тени и
+   тёмная тема берутся из дизайн-системы — здесь только
+   раскладка лендинга и его масштаб.
+
+   Отличия от экранов приложения (осознанные):
+   - масштаб типографики крупнее: у лендинга свой ритм, а не 22px h1;
+   - заголовки набраны Inter 600, а не Space Grotesk: в Space Grotesk
+     нет кириллицы (lessons.md), поэтому он оставлен только цифрам;
+   - шрифты подключены локально (см. @font-face) — без запросов к Google.
+   ========================================================= */
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('fonts/SpaceGrotesk-Variable.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- Масштаб лендинга ---------- */
+
+:root {
+  --page-max: 1120px;
+  --page-pad: clamp(20px, 4vw, 32px);
+  --section-y: clamp(56px, 7vw, 92px);
+  --radius-hero: 28px;
+  --header-h: 68px;
+}
+
+/* ---------- База ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+body {
+  margin: 0;
+  background: var(--chalk);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 3px solid var(--clay);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: var(--court);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+.skip-link:focus {
+  top: 12px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--page-pad);
+}
+
+/* ---------- Иконки: форма в маске, цвет — currentColor ----------
+   Иконки — родной набор приложения (rallymind-icons), переведённый
+   в альфа-маски, поэтому наследуют цвет темы и не «белеют» в тёмной. */
+
+.icon {
+  display: inline-block;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.icon-racket { -webkit-mask-image: url('img/icons/racket.png'); mask-image: url('img/icons/racket.png'); }
+.icon-target { -webkit-mask-image: url('img/icons/target.png'); mask-image: url('img/icons/target.png'); }
+.icon-ball { -webkit-mask-image: url('img/icons/ball.png'); mask-image: url('img/icons/ball.png'); }
+.icon-trend { -webkit-mask-image: url('img/icons/trend.png'); mask-image: url('img/icons/trend.png'); }
+.icon-eye { -webkit-mask-image: url('img/icons/eye.png'); mask-image: url('img/icons/eye.png'); }
+.icon-check { -webkit-mask-image: url('img/icons/check.png'); mask-image: url('img/icons/check.png'); }
+.icon-shield { -webkit-mask-image: url('img/icons/shield.png'); mask-image: url('img/icons/shield.png'); }
+.icon-lock { -webkit-mask-image: url('img/icons/lock.png'); mask-image: url('img/icons/lock.png'); }
+.icon-camera { -webkit-mask-image: url('img/icons/camera.png'); mask-image: url('img/icons/camera.png'); }
+.icon-video { -webkit-mask-image: url('img/icons/video.png'); mask-image: url('img/icons/video.png'); }
+.icon-close { -webkit-mask-image: url('img/icons/close.png'); mask-image: url('img/icons/close.png'); }
+.icon-flame { -webkit-mask-image: url('img/icons/flame.png'); mask-image: url('img/icons/flame.png'); }
+.icon-ai { -webkit-mask-image: url('img/icons/ai.svg'); mask-image: url('img/icons/ai.svg'); }
+/* Удары: нарисованы под этот лендинг в линии набора приложения —
+   родные иконки сегментов читались как заглушки (две одинаковые стрелки,
+   сетка из квадратов). «Ноги» — родная иконка приложения, она однозначна. */
+.icon-seg-forehand { -webkit-mask-image: url('img/icons/seg-forehand.svg'); mask-image: url('img/icons/seg-forehand.svg'); }
+.icon-seg-backhand { -webkit-mask-image: url('img/icons/seg-backhand.svg'); mask-image: url('img/icons/seg-backhand.svg'); }
+.icon-seg-serve { -webkit-mask-image: url('img/icons/seg-serve.svg'); mask-image: url('img/icons/seg-serve.svg'); }
+.icon-seg-volley { -webkit-mask-image: url('img/icons/seg-volley.svg'); mask-image: url('img/icons/seg-volley.svg'); }
+.icon-seg-footwork { -webkit-mask-image: url('img/icons/seg-footwork.png'); mask-image: url('img/icons/seg-footwork.png'); }
+.icon-seg-rally { -webkit-mask-image: url('img/icons/seg-rally.svg'); mask-image: url('img/icons/seg-rally.svg'); }
+
+/* ---------- Кнопки (DS §4.1) ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 14px 24px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--clay);
+  color: #fff;
+  box-shadow: var(--shadow-card);
+}
+.btn-primary:hover {
+  box-shadow: var(--shadow-float);
+}
+
+.btn-ghost {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn-ghost:hover {
+  border-color: var(--ink-soft);
+}
+
+.btn-ghost-dark {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.28);
+}
+.btn-ghost-dark:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.btn .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.btn-sm {
+  min-height: 42px;
+  padding: 10px 16px;
+  font-size: 14.5px;
+}
+
+/* ---------- Шапка ---------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--header-h);
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+@supports (backdrop-filter: blur(8px)) {
+  .site-header {
+    background: color-mix(in srgb, var(--paper) 78%, transparent);
+    backdrop-filter: blur(12px) saturate(1.4);
+  }
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  height: 100%;
+}
+
+.brand {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 16.5px;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+.brand img {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+}
+
+.header-nav {
+  display: flex;
+  gap: 22px;
+  margin-left: auto;
+  font-size: 15px;
+  color: var(--ink-soft);
+}
+.header-nav a {
+  text-decoration: none;
+}
+.header-nav a:hover {
+  color: var(--ink);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.header-actions .btn {
+  min-height: 42px;
+  padding: 10px 18px;
+  font-size: 14.5px;
+}
+
+/* Переключатель языка: обычные ссылки, работает без JS */
+
+.lang-switch {
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--chalk);
+  font-size: 13px;
+  font-weight: 600;
+}
+.lang-switch a,
+.lang-switch span {
+  padding: 5px 11px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--ink-soft);
+}
+.lang-switch [aria-current='true'] {
+  background: var(--court);
+  color: #fff;
+}
+
+@media (max-width: 860px) {
+  .header-nav {
+    display: none;
+  }
+}
+
+/* На узком экране логотип, переключатель языка и CTA перестают
+   помещаться в строку — от этого страница уезжала по горизонтали. */
+
+.label-short {
+  display: none;
+}
+
+@media (max-width: 620px) {
+  .site-header .container {
+    gap: 10px;
+  }
+  .header-actions {
+    margin-left: auto;
+    gap: 8px;
+  }
+  .header-actions .btn {
+    padding: 10px 14px;
+  }
+  .header-actions .label-full {
+    display: none;
+  }
+  .header-actions .label-short {
+    display: inline;
+  }
+}
+
+@media (max-width: 430px) {
+  .brand {
+    font-size: 15.5px;
+  }
+  .brand img {
+    width: 28px;
+    height: 28px;
+  }
+  .lang-switch a,
+  .lang-switch span {
+    padding: 5px 9px;
+  }
+  .header-actions .btn {
+    padding: 10px 12px;
+  }
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  padding: clamp(18px, 3vw, 28px) 0 0;
+}
+
+.hero-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-hero);
+  background: linear-gradient(155deg, var(--court-2) 0%, var(--court) 62%);
+  color: #fff;
+  padding: clamp(28px, 5vw, 56px);
+}
+
+/* Разметка корта — тот же приём, что в hero-карточке приложения */
+.hero-lines {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.hero-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 14px 7px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.92);
+}
+.eyebrow .icon {
+  width: 17px;
+  height: 17px;
+  color: var(--ball);
+}
+
+.hero h1 {
+  margin: 20px 0 0;
+  font-size: clamp(31px, 4.6vw, 50px);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
+.hero-lead {
+  margin: 18px 0 0;
+  max-width: 46ch;
+  font-size: clamp(16px, 1.55vw, 18.5px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 28px 0 0;
+}
+
+.hero-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0 0;
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.66);
+}
+.hero-note .icon {
+  width: 16px;
+  height: 16px;
+  color: var(--ball);
+}
+
+/* ---------- Телефон и скриншоты ---------- */
+
+.phone {
+  position: relative;
+  width: min(300px, 100%);
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 42px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+  box-shadow: var(--shadow-float);
+}
+@supports (backdrop-filter: blur(4px)) {
+  .phone {
+    backdrop-filter: blur(4px);
+  }
+}
+
+/* Пропорции равны пропорциям файлов в assets/img (1179×2556, iPhone 15 Pro),
+   поэтому скриншот ложится в рамку без обрезки. Если снимки переснимут
+   в другом разрешении — поправить здесь одно число. */
+.phone-screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: 33px;
+  background: var(--chalk);
+  aspect-ratio: 1179 / 2556;
+}
+
+.phone-screen > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Секции ---------- */
+
+.section {
+  padding: var(--section-y) 0 0;
+}
+.section-last {
+  padding-bottom: var(--section-y);
+}
+
+.section-head {
+  max-width: 62ch;
+  margin-bottom: clamp(24px, 3vw, 40px);
+}
+
+.section-title {
+  font-size: clamp(24px, 3.2vw, 34px);
+  letter-spacing: -0.025em;
+}
+
+.section-lead {
+  margin-top: 14px;
+  font-size: 17px;
+  color: var(--ink-soft);
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--clay-text);
+}
+.kicker .icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- «Знакомо?» ---------- */
+
+.pains {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+.pain {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--clay);
+  border-radius: 16px;
+  background: var(--paper);
+  padding: 20px 22px;
+  font-size: 16px;
+  color: var(--ink);
+  box-shadow: var(--shadow-card);
+}
+
+/* ---------- Шаги ---------- */
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+.step {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--paper);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+.step-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--clay);
+}
+.step h3 {
+  margin-top: 12px;
+  font-size: 18px;
+}
+.step p {
+  margin-top: 9px;
+  font-size: 15.5px;
+  color: var(--ink-soft);
+}
+
+/* ---------- Карточки «Что внутри» ---------- */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+.card {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--paper);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+.card-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  /* Нейтральный фон — по умолчанию. Цветные подложки только там,
+     где смысл совпадает с правилом дизайн-системы: clay — процесс,
+     ball — «готово/согласовано». */
+  background: var(--chalk);
+  color: var(--ink-soft);
+}
+.card-icon .icon {
+  width: 23px;
+  height: 23px;
+}
+.card-icon-process {
+  background: var(--clay-soft);
+  color: var(--clay-text);
+}
+.card-icon-done {
+  background: var(--ball-soft);
+  color: var(--ball-text);
+}
+.card-icon-court {
+  background: var(--court);
+  color: #fff;
+}
+.card h3 {
+  margin-top: 16px;
+  font-size: 18px;
+}
+.card p {
+  margin-top: 9px;
+  font-size: 15.5px;
+  color: var(--ink-soft);
+}
+
+/* Ряд ударов */
+
+.segments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: clamp(24px, 3vw, 34px);
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  font-size: 14.5px;
+  font-weight: 500;
+}
+.chip .icon {
+  width: 19px;
+  height: 19px;
+  color: var(--ink-soft);
+}
+
+/* ---------- Скриншоты ---------- */
+
+.shots {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 3vw, 32px);
+  align-items: start;
+}
+@media (max-width: 820px) {
+  .shots {
+    grid-template-columns: repeat(3, minmax(74%, 1fr));
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .shot {
+    scroll-snap-align: center;
+  }
+}
+
+.shot {
+  margin: 0;
+}
+.shot figcaption {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+/* ---------- Цифры (появляются, когда заполнены) ---------- */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+.stats[hidden] {
+  display: none;
+}
+.stat {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--paper);
+  padding: 22px;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+}
+.stat-value {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.4vw, 38px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--court);
+}
+.stat-label {
+  display: block;
+  margin-top: 6px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+/* ---------- Кому подходит ---------- */
+
+.fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 16px;
+}
+.fit-card {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--paper);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+.fit-card h3 {
+  font-size: 17px;
+}
+.fit-list {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.fit-list li {
+  display: flex;
+  gap: 11px;
+  font-size: 15.5px;
+  color: var(--ink-soft);
+}
+.fit-list .icon {
+  width: 19px;
+  height: 19px;
+  margin-top: 3px;
+}
+.fit-yes .icon {
+  color: var(--ball-text);
+}
+.fit-no .icon {
+  color: var(--ink-soft);
+}
+
+/* ---------- FAQ ---------- */
+
+.faq {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--paper);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+.faq details + details {
+  border-top: 1px solid var(--line);
+}
+.faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  font-size: 16.5px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+.faq summary::after {
+  content: '';
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--ink-soft);
+  border-bottom: 2px solid var(--ink-soft);
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 0.18s ease;
+}
+.faq details[open] summary::after {
+  transform: rotate(-135deg) translateY(-2px);
+}
+.faq-body {
+  padding: 0 24px 22px;
+  max-width: 78ch;
+  font-size: 15.5px;
+  color: var(--ink-soft);
+}
+
+/* ---------- Финальный CTA ---------- */
+
+.final-cta {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-hero);
+  background: linear-gradient(155deg, var(--court-2) 0%, var(--court) 62%);
+  color: #fff;
+  padding: clamp(32px, 5vw, 60px);
+  text-align: center;
+}
+.final-cta h2 {
+  font-size: clamp(25px, 3.4vw, 36px);
+  color: #fff;
+}
+.final-cta p {
+  margin: 16px auto 0;
+  max-width: 52ch;
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.8);
+}
+.final-cta .hero-cta {
+  justify-content: center;
+}
+
+/* ---------- Футер ---------- */
+
+.site-footer {
+  margin-top: var(--section-y);
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+  padding: 34px 0 40px;
+}
+.footer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+  justify-content: space-between;
+}
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+.footer-brand img {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-size: 14.5px;
+  color: var(--ink-soft);
+}
+.footer-links a {
+  text-decoration: none;
+}
+.footer-links a:hover {
+  color: var(--ink);
+}
+.footer-legal {
+  margin-top: 22px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* ---------- Появление секций ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .btn,
+  .faq summary::after {
+    transition: none;
+  }
+}
+
+/* ---------- Тёмная тема: точечные правки поверх токенов ---------- */
+
+[data-theme='dark'] .site-header {
+  border-bottom-color: var(--line);
+}
+[data-theme='dark'] .card-icon-court {
+  background: var(--court-2);
+}
+[data-theme='dark'] .stat-value {
+  color: var(--ball);
+}
