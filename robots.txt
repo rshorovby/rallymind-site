@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Эти папки на сайте не используются: fonts/ и tools/ — исходники,
+# screens/ и preview/ — материалы для сборки и ревью. При деплое их
+# копировать не нужно, но если уедут — пусть не попадают в индекс.
+Disallow: /rallymind-site/fonts/
+Disallow: /rallymind-site/tools/
+Disallow: /rallymind-site/screens/
+Disallow: /rallymind-site/preview/
+
+Sitemap: https://rshorovby.github.io/rallymind-site/sitemap.xml

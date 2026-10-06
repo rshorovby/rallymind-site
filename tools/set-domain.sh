@@ -43,10 +43,16 @@ SITE_URL="$SITE_URL" python3 - <<'PY'
 import os
 import re
 import sys
+from urllib.parse import urlparse
 
 site = os.environ["SITE_URL"]
 BEGIN = "SITE-URL:BEGIN"
 END = "SITE-URL:END"
+
+# Для GitHub Pages вида https://user.github.io/repo/ пути в robots.txt должны
+# включать подпапку репозитория: Disallow: /preview/ там ни на что не действует,
+# потому что сайт живёт не в корне домена.
+prefix = urlparse(site).path.rstrip("/")
 
 
 def process(path, locale):
@@ -104,10 +110,10 @@ Allow: /
 # Эти папки на сайте не используются: fonts/ и tools/ — исходники,
 # screens/ и preview/ — материалы для сборки и ревью. При деплое их
 # копировать не нужно, но если уедут — пусть не попадают в индекс.
-Disallow: /fonts/
-Disallow: /tools/
-Disallow: /screens/
-Disallow: /preview/
+Disallow: {prefix}/fonts/
+Disallow: {prefix}/tools/
+Disallow: {prefix}/screens/
+Disallow: {prefix}/preview/
 
 Sitemap: {site}/sitemap.xml
 """

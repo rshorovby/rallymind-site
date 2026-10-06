@@ -117,18 +117,22 @@ python3 -m pip install --user Pillow fonttools brotli
 
 **Про имя репозитория.** Он назван `rallymind-site` — по старому имени продукта, сознательно, чтобы не расходиться с папкой и историей проекта. Плата за это одна: в публичном адресе видно `rallymind-site`, хотя на страницах старого названия нет. Если это начнёт мешать (например, при переезде на свой домен) — репозиторий переименовывается в настройках, GitHub ставит редирект, а затем нужно заново выполнить `tools/set-domain.sh` с новым адресом.
 
-Порядок публикации: **сначала `set-domain.sh`, потом push.** Публичный адрес попадает в `og:url`, `canonical`, `hreflang` и `sitemap`, поэтому он должен быть проставлен до того, как страницу увидят поисковики и Telegram.
+**Состояние на сейчас:** адрес проставлен (`https://rshorovby.github.io/rallymind-site/`), `og:url`, `og:image`, `canonical`, `hreflang`, JSON-LD, `robots.txt` и `sitemap.xml` на месте. Осталось создать репозиторий и запушить.
+
+Порядок публикации: **сначала `set-domain.sh`, потом push.** Публичный адрес попадает в `og:url`, `canonical`, `hreflang` и `sitemap`, поэтому он должен быть проставлен до того, как страницу увидят поисковики и Telegram — иначе превью ссылки в Telegram закешируется пустым, а это чинится долго.
 
 ```bash
 cd /Users/rust/rallymind-site
 tools/set-domain.sh https://rshorovby.github.io/rallymind-site/   # или свой домен
 
-git init -b main          # уже сделано
 git add -A
 git commit -m "Лендинг SwingSync"
-git remote add origin git@github.com:rshorovby/rallymind-site.git
-git push -u origin main
+
+# создаёт репозиторий, добавляет origin и пушит
+gh repo create rallymind-site --public --source=. --remote=origin --push
 ```
+
+`gh` требует однократного `brew install gh` и `gh auth login` (протокол — HTTPS: SSH упирается в парольную фразу ключа). Дальше достаточно `git push`.
 
 `git add -A` не потянет `preview/` — он в `.gitignore`. Папки `screens/`, `fonts/` и `tools/` попадут в репозиторий намеренно: это исходники, из которых собираются WebP и woff2. При загрузке на хостинг копированием их можно не копировать, как и `preview/`.
 
