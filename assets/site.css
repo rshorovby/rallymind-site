@@ -741,49 +741,6 @@ svg {
   color: var(--ink-soft);
 }
 
-/* ---------- Кому подходит ---------- */
-
-.fit {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-  gap: 16px;
-}
-.fit-card {
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  background: var(--paper);
-  padding: 24px;
-  box-shadow: var(--shadow-card);
-}
-.fit-card h3 {
-  font-size: 17px;
-}
-.fit-list {
-  margin: 16px 0 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.fit-list li {
-  display: flex;
-  gap: 11px;
-  font-size: 15.5px;
-  color: var(--ink-soft);
-}
-.fit-list .icon {
-  width: 19px;
-  height: 19px;
-  margin-top: 3px;
-}
-.fit-yes .icon {
-  color: var(--ball-text);
-}
-.fit-no .icon {
-  color: var(--ink-soft);
-}
-
 /* ---------- FAQ ---------- */
 
 .faq {
