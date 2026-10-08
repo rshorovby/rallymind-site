@@ -130,11 +130,11 @@ tools/deploy.sh
 
 `tools/deploy.sh` собирает `dist/` и вызывает `wrangler pages deploy`. Домен привязывается один раз после первой заливки запросом Pages API: `POST /accounts/{account_id}/pages/projects/advantace/domains` с телом `{"name":"advantace.app"}`, и так же для `www.advantace.app`. Редирект `www` на корень включается в настройках проекта. Зона `.app` отдаётся только по HTTPS.
 
-**GitHub Pages.** Репозиторий `rshorovby/rallymind-site` по-прежнему публикует ветку `main` с корня, пока источник Pages не выключен. Это запасной адрес `https://rshorovby.github.io/rallymind-site/`. Вместе с ним в интернет попадают `screens/`, `fonts/` и `tools/` — Pages не умеет отдать только `dist/`. После того как `advantace.app` открывается, источник Pages в настройках репозитория стоит выключить.
+**GitHub Pages выключен.** Публичный адрес один: `https://advantace.app`. Репозиторий `rshorovby/rallymind-site` остаётся хранилищем исходников. Старая ссылка `https://rshorovby.github.io/rallymind-site/` больше не открывается.
 
-**Про имя репозитория.** Он назван `rallymind-site` — по старому имени продукта, сознательно, чтобы не расходиться с папкой и историей проекта. На страницах старого названия нет. В адресе GitHub Pages сегмент `rallymind-site` виден, пока этот источник не выключен. На `advantace.app` его нет.
+**Про имя репозитория.** Он назван `rallymind-site` — по старому имени продукта, сознательно, чтобы не расходиться с папкой и историей проекта. На страницах сайта этого имени нет.
 
-**Состояние на сейчас:** абсолютные адреса в страницах, `robots.txt` и `sitemap.xml` указывают на `https://advantace.app`. `canonical`, `og:image`, `hreflang` и JSON-LD стоят в разметке как настоящие теги. Пока DNS домена пустой, открывается прежний адрес GitHub Pages.
+**Состояние на сейчас:** сайт отдаёт Cloudflare Pages. `canonical`, `og:image`, `hreflang`, JSON-LD, `robots.txt` и `sitemap.xml` указывают на `https://advantace.app`.
 
 Порядок такой: сначала `set-domain.sh`, потом commit и push, затем `tools/deploy.sh`. Публичный адрес попадает в `og:url` и `canonical`, поэтому он должен быть проставлен до того, как ссылку увидит Telegram — превью кешируется надолго.
 
