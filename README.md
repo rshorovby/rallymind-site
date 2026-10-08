@@ -128,7 +128,7 @@ tools/set-domain.sh https://advantace.app
 tools/deploy.sh
 ```
 
-`tools/deploy.sh` собирает `dist/` и вызывает `wrangler pages deploy`. Домен к проекту привязывается отдельно, один раз: `wrangler pages domain add advantace.app --project-name advantace`, то же для `www` с редиректом на корень. Зона `.app` отдаётся только по HTTPS.
+`tools/deploy.sh` собирает `dist/` и вызывает `wrangler pages deploy`. Домен привязывается один раз после первой заливки запросом Pages API: `POST /accounts/{account_id}/pages/projects/advantace/domains` с телом `{"name":"advantace.app"}`, и так же для `www.advantace.app`. Редирект `www` на корень включается в настройках проекта. Зона `.app` отдаётся только по HTTPS.
 
 **GitHub Pages.** Репозиторий `rshorovby/rallymind-site` по-прежнему публикует ветку `main` с корня, пока источник Pages не выключен. Это запасной адрес `https://rshorovby.github.io/rallymind-site/`. Вместе с ним в интернет попадают `screens/`, `fonts/` и `tools/` — Pages не умеет отдать только `dist/`. После того как `advantace.app` открывается, источник Pages в настройках репозитория стоит выключить.
 
