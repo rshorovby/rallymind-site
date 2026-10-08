@@ -20,3 +20,6 @@ dist/
 .env
 .env.*
 !.env.example
+
+# Локальный кеш Wrangler после tools/deploy.sh.
+.wrangler/
