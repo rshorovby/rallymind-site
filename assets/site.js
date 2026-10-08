@@ -37,12 +37,7 @@ const STATS = {
   }
 
   function apply(isDark) {
-    const root = document.documentElement;
-    if (isDark) {
-      root.dataset.theme = 'dark';
-    } else {
-      delete root.dataset.theme;
-    }
+    document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
   }
 
   const chosen = stored();

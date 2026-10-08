@@ -62,6 +62,7 @@ html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 16px);
+  color-scheme: light;
 }
 
 body {
@@ -926,6 +927,16 @@ svg {
   }
 }
 
+/* ---------- 404 ---------- */
+
+.missing {
+  max-width: 36rem;
+  padding-bottom: var(--section-y);
+}
+.missing .hero-cta {
+  margin-top: 28px;
+}
+
 /* ---------- Тёмная тема: точечные правки поверх токенов ---------- */
 
 [data-theme='dark'] .site-header {
@@ -936,4 +947,16 @@ svg {
 }
 [data-theme='dark'] .stat-value {
   color: var(--ball);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .site-header {
+    border-bottom-color: var(--line);
+  }
+  :root:not([data-theme='light']) .card-icon-court {
+    background: var(--court-2);
+  }
+  :root:not([data-theme='light']) .stat-value {
+    color: var(--ball);
+  }
 }

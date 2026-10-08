@@ -2,15 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://rshorovby.github.io/rallymind-site/</loc>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://rshorovby.github.io/rallymind-site/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://rshorovby.github.io/rallymind-site/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://rshorovby.github.io/rallymind-site/"/>
+    <loc>https://advantace.app/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://advantace.app/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://advantace.app/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://advantace.app/"/>
   </url>
   <url>
-    <loc>https://rshorovby.github.io/rallymind-site/en/</loc>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://rshorovby.github.io/rallymind-site/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://rshorovby.github.io/rallymind-site/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://rshorovby.github.io/rallymind-site/"/>
+    <loc>https://advantace.app/en/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://advantace.app/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://advantace.app/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://advantace.app/"/>
   </url>
 </urlset>

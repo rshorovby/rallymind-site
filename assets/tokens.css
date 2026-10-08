@@ -76,6 +76,7 @@
       следовать за системной настройкой устройства.
       ========================================================= */
    [data-theme="dark"]{
+     color-scheme: dark;
      --court:        #2F5A3E;  /* светлее, чем в светлой теме — иначе не отличить от фона */
      --court-2:      #3E6E4D;
    
@@ -99,6 +100,33 @@
    
      --shadow-card:  0 2px 8px rgba(0, 0, 0, 0.35);
      --shadow-float: 0 12px 24px rgba(0, 0, 0, 0.5);
+   }
+
+   /* Тот же набор, если скрипт темы не выполнился.
+      data-theme="light" отключает его при ручном выборе светлой темы.
+      Значения держать одинаковыми с блоком [data-theme="dark"]. */
+   @media (prefers-color-scheme: dark) {
+     :root:not([data-theme="light"]) {
+       color-scheme: dark;
+       --court:        #2F5A3E;
+       --court-2:      #3E6E4D;
+       --clay:         #D97A46;
+       --clay-soft:    rgba(217, 122, 70, 0.16);
+       --clay-text:    #F0B384;
+       --ball:         #B9D34A;
+       --ball-soft:    rgba(185, 211, 74, 0.14);
+       --ball-text:    #D4E895;
+       --danger:           #E0685A;
+       --danger-soft:      rgba(224, 104, 90, 0.14);
+       --danger-soft-line: rgba(224, 104, 90, 0.3);
+       --chalk:        #10201A;
+       --paper:        #1A2C23;
+       --ink:          #F1EFE7;
+       --ink-soft:     #A9B3A4;
+       --line:         #2C3D32;
+       --shadow-card:  0 2px 8px rgba(0, 0, 0, 0.35);
+       --shadow-float: 0 12px 24px rgba(0, 0, 0, 0.5);
+     }
    }
    
    /* =========================================================

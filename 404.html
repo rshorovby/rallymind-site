@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<title>Страница не найдена — SwingSync</title>
+<script>
+(function () {
+  try {
+    var stored = localStorage.getItem('rally-theme');
+    var dark = stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  } catch (e) {}
+  var project = location.pathname.indexOf('/rallymind-site/') === 0;
+  var base = document.createElement('base');
+  base.href = project ? '/rallymind-site/' : '/';
+  document.head.appendChild(base);
+})();
+</script>
+<link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">К содержанию</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="./">
+      <img src="assets/img/logo-96.png" alt="" width="32" height="32">
+      SwingSync
+    </a>
+    <div class="header-actions" style="margin-left:auto">
+      <div class="lang-switch" role="group" aria-label="Язык сайта">
+        <a href="./" hreflang="ru" lang="ru">RU</a>
+        <a href="en/" hreflang="en" lang="en">EN</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="section">
+    <div class="container missing">
+      <span class="kicker">404</span>
+      <h1 class="section-title">Такой страницы нет</h1>
+      <p class="section-lead">Ссылка устарела или адрес набран с ошибкой.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="./">На главную</a>
+        <a class="btn btn-ghost" href="en/">English</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

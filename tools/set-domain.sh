@@ -6,17 +6,18 @@
 #   tools/set-domain.sh https://example.com
 #
 # Что делает:
-#   1. в index.html и en/index.html раскомментирует блок между
-#      SITE-URL:BEGIN и SITE-URL:END и подставит домен вместо __SITE_URL__
-#      (og:url, og:image, og:image:alt, twitter:card, canonical, hreflang, JSON-LD);
+#   1. в index.html и en/index.html подставляет домен в блок между
+#      SITE-URL:BEGIN и SITE-URL:END
+#      (og:url, og:image, twitter:card, canonical, hreflang, JSON-LD)
+#      и снимает HTML-комментарий, если блок им обёрнут;
 #   2. создаст robots.txt и sitemap.xml с абсолютными адресами.
 #
 # Скрипт можно запускать повторно — например, при переезде с
 # github.io на свой домен: он заменит прежний адрес на новый.
 #
-# Почему блок был закомментирован: canonical и og:url с заглушкой
-# хуже, чем их отсутствие, — поисковик может счесть страницу
-# дублем несуществующего адреса. До выбора домена они выключены.
+# Маркеры стоят на отдельных строках. Содержимое между ними — рабочий
+# HTML. Комментарий вокруг тегов скрипт снимает: раньше он смотрел
+# только на первую строку блока и оставлял canonical внутри <!-- -->.
 # =========================================================
 
 set -euo pipefail
@@ -66,9 +67,16 @@ def process(path, locale):
         sys.exit(f"{path}: не найден блок {BEGIN}…{END}")
 
     block = lines[begin + 1:end]
-    commented = bool(block) and block[0].strip() == "<!--"
-
-    kept = [l for l in block if l.strip() not in ("<!--", "-->")] if commented else block
+    # Комментарий может начинаться не с первой строки блока
+    # (так и было: пояснение закрывалось на -->, а теги оставались внутри).
+    kept = []
+    for line in block:
+        stripped = line.strip()
+        if stripped in ("<!--", "-->"):
+            continue
+        if stripped.startswith("<!--") and stripped.endswith("-->"):
+            continue
+        kept.append(line)
 
     # Заглушку меняем на первом запуске, прежний адрес — при повторном.
     if any("__SITE_URL__" in l for l in kept):
@@ -138,6 +146,30 @@ sitemap = f"""<?xml version="1.0" encoding="UTF-8"?>
 """
 open("sitemap.xml", "w", encoding="utf-8").write(sitemap)
 print("  создано: robots.txt, sitemap.xml")
+
+from html.parser import HTMLParser
+
+class Seo(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.tags = []
+
+    def handle_starttag(self, tag, attrs):
+        d = dict(attrs)
+        if tag == "link" and d.get("rel") in ("canonical", "alternate"):
+            self.tags.append(d["rel"])
+        if tag == "meta" and d.get("property") == "og:image":
+            self.tags.append("og:image")
+        if tag == "meta" and d.get("name") == "twitter:card":
+            self.tags.append("twitter:card")
+
+for path in ("index.html", "en/index.html"):
+    parser = Seo()
+    parser.feed(open(path, encoding="utf-8").read())
+    for need in ("canonical", "alternate", "og:image", "twitter:card"):
+        if need not in parser.tags:
+            sys.exit(f"{path}: тег {need} не виден парсеру — блок SITE-URL внутри комментария")
+    print(f"  {path}: парсер видит canonical, hreflang, og:image")
 PY
 
 echo

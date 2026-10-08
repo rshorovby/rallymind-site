@@ -15,8 +15,11 @@
 ```
 index.html              русская версия (основная)
 en/index.html           английская версия
-robots.txt              появляется после tools/set-domain.sh
-sitemap.xml             появляется после tools/set-domain.sh
+404.html                страница неизвестного адреса
+robots.txt              абсолютные адреса после tools/set-domain.sh
+sitemap.xml             абсолютные адреса после tools/set-domain.sh
+wrangler.toml           проект Cloudflare Pages (имя advantace, каталог dist)
+.env.example            какие переменные нужны для деплоя; сам .env не в git
 .gitignore
 assets/
   tokens.css            копия дизайн-системы из rallyiOS (см. «Дизайн-система»)
@@ -41,12 +44,14 @@ tools/
   make-webp.sh          сборка WebP из screens/ в assets/img/
   make-fonts.sh         сборка woff2 из fonts/ в assets/fonts/
   set-domain.sh         подстановка домена: og, canonical, hreflang, robots, sitemap
+  export-site.sh        публичные файлы в dist/ (без исходников и logo-512.png)
+  deploy.sh             export + заливка dist/ на Cloudflare Pages
   render-site.mjs       рендеры preview/ и аудит вёрстки
 preview/                полностраничные рендеры для ревью; в git не хранятся
 README.md
 ```
 
-Папки `preview/`, `screens/`, `fonts/` и `tools/` при деплое можно не копировать — на страницы они не влияют. `preview/` вдобавок не попадает в git (`.gitignore`): это 4 МБ рендеров, которые каждый раз перерисовываются.
+На хостинг уходит не корень репозитория, а `dist/` из `tools/export-site.sh`. Туда не копируются `preview/`, `screens/`, `fonts/`, `tools/` и `assets/img/logo-512.png` (в разметке не используется). `preview/` ещё и не в git.
 
 ## Локальный просмотр
 
@@ -102,7 +107,7 @@ python3 -m pip install --user Pillow fonttools brotli
 
    Конвейер такой: **исходник PNG лежит в `screens/`, страница грузит WebP из `assets/img/`**. После пересъёмки положить PNG в `screens/` и выполнить `tools/make-webp.sh` — скрипт соберёт WebP (качество 85, альфа сохраняется) и покажет, сколько вышло. Это даёт ~90–135 КБ на файл вместо ~0,9–1,1 МБ; при 1179×2556 разница с PNG не видна даже при просмотре 1:1. Требования: пропорции **1179×2556** (iPhone 15 Pro), без рамки телефона — рамка уже есть в вёрстке. Пропорция задана в `site.css` в `.phone-screen` (`aspect-ratio: 1179 / 2556`): при съёмке в другом разрешении поправить её там же и в атрибутах `width`/`height` у `<img>`. Если добавляется локаль или экран — добавить `<img>` в `.phone-screen` в `index.html` и `en/index.html`.
 3. **Политика конфиденциальности.** Создать `privacy.html` и раскомментировать ссылку в футере `index.html` (там помечено `ЗАМЕНИТЬ`). Для лендинга с подпиской и сбором данных это требование App Store и здравого смысла.
-4. **Домен.** Сделано для `https://rshorovby.github.io/rallymind-site/`. Инструмент — `tools/set-domain.sh <адрес>`: он раскомментирует блок `SITE-URL` в обеих страницах и подставит адрес в `og:url`, `og:image`, `twitter:card`, `canonical`, `hreflang` и JSON-LD, а также создаст `robots.txt` и `sitemap.xml`. Пока домен не выбран, блок закомментирован намеренно: `canonical` и `og:url` с заглушкой хуже, чем их отсутствие. Скрипт можно запускать повторно — при переезде он заменит прежний адрес, сохранив путь `/en/`, и пересчитает подпапку в `robots.txt`.
+4. **Домен.** Публичный адрес — `https://advantace.app`. Инструмент — `tools/set-domain.sh <адрес>`: он подставляет адрес в `og:url`, `og:image`, `twitter:card`, `canonical`, `hreflang` и JSON-LD, снимает HTML-комментарий вокруг этого блока, если он снова появился, и переписывает `robots.txt` и `sitemap.xml`. После прогона скрипт проверяет, что парсер HTML эти теги видит. Повторный запуск заменяет прежний адрес и сохраняет путь `/en/`.
 5. **OG-картинка.** Готово: `assets/img/og.png` (русская) и `assets/img/og-en.png` (английская), 1200×630. Собраны из шрифтов приложения (`fonts/`): фон-градиент `--court-2 → --court`, разметка корта, иконка приложения со скруглением, заголовок Inter SemiBold, глиняная плашка CTA. Пересобрать можно тем же составом; если меняется заголовок — поправить текст в картинке отдельно, она статичная.
 6. **Проверить формулировки.** В FAQ про цену написано «продукт в открытой бете, разборы бесплатны» — это соответствует текущему состоянию (монетизация выключена). Когда тарифы появятся, текст нужно поменять.
 7. **Проверить превью ссылки в Telegram.** Сайт будут расшаривать в чатах, а Telegram кеширует превью надолго — битое потом чинится долго. После `set-domain.sh` отправить ссылку себе в «Избранное» и посмотреть на карточку.
@@ -113,32 +118,27 @@ python3 -m pip install --user Pillow fonttools brotli
 
 ## Деплой
 
-**GitHub Pages.** Репозиторий: `rshorovby/rallymind-site`, публичный. Адрес сайта — `https://rshorovby.github.io/rallymind-site/`, пока не подключён свой домен.
+Целевой адрес — `https://advantace.app`, хостинг — Cloudflare Pages, проект `advantace`. Домен уже на неймсерверах Cloudflare. В репозиторий кладётся исходник; на Pages уходит каталог `dist/`.
 
-**Про имя репозитория.** Он назван `rallymind-site` — по старому имени продукта, сознательно, чтобы не расходиться с папкой и историей проекта. Плата за это одна: в публичном адресе видно `rallymind-site`, хотя на страницах старого названия нет. Если это начнёт мешать (например, при переезде на свой домен) — репозиторий переименовывается в настройках, GitHub ставит редирект, а затем нужно заново выполнить `tools/set-domain.sh` с новым адресом.
-
-**Состояние на сейчас:** сайт опубликован — `https://rshorovby.github.io/rallymind-site/`, Pages собирается из ветки `main`, корень. `og:url`, `og:image`, `canonical`, `hreflang`, JSON-LD, `robots.txt` и `sitemap.xml` на месте и проверены на живом адресе (`node tools/render-site.mjs --audit --url=https://rshorovby.github.io/rallymind-site` — 24 комбинации без замечаний).
-
-Порядок публикации: **сначала `set-domain.sh`, потом push.** Публичный адрес попадает в `og:url`, `canonical`, `hreflang` и `sitemap`, поэтому он должен быть проставлен до того, как страницу увидят поисковики и Telegram — иначе превью ссылки в Telegram закешируется пустым, а это чинится долго.
+Токен и id аккаунта лежат в `.env` (см. `.env.example`), файл в git не попадает. Права токена: Account → Cloudflare Pages → Edit, Account → Account Settings → Read, на зону `advantace.app` — Zone → Read и DNS → Edit.
 
 ```bash
 cd /Users/rust/rallymind-site
-tools/set-domain.sh https://rshorovby.github.io/rallymind-site/   # или свой домен
-
-git add -A
-git commit -m "Лендинг SwingSync"
-
-# создаёт репозиторий, добавляет origin и пушит
-gh repo create rallymind-site --public --source=. --remote=origin --push
+tools/set-domain.sh https://advantace.app
+tools/deploy.sh
 ```
 
-`gh` требует однократного `brew install gh` и `gh auth login` (протокол — HTTPS: SSH упирается в парольную фразу ключа). Дальше достаточно `git push`.
+`tools/deploy.sh` собирает `dist/` и вызывает `wrangler pages deploy`. Домен к проекту привязывается отдельно, один раз: `wrangler pages domain add advantace.app --project-name advantace`, то же для `www` с редиректом на корень. Зона `.app` отдаётся только по HTTPS.
 
-`git add -A` не потянет `preview/` — он в `.gitignore`. Папки `screens/`, `fonts/` и `tools/` попадут в репозиторий намеренно: это исходники, из которых собираются WebP и woff2. При загрузке на хостинг копированием их можно не копировать, как и `preview/`.
+**GitHub Pages.** Репозиторий `rshorovby/rallymind-site` по-прежнему публикует ветку `main` с корня, пока источник Pages не выключен. Это запасной адрес `https://rshorovby.github.io/rallymind-site/`. Вместе с ним в интернет попадают `screens/`, `fonts/` и `tools/` — Pages не умеет отдать только `dist/`. После того как `advantace.app` открывается, источник Pages в настройках репозитория стоит выключить.
 
-Затем в настройках репозитория: Settings → Pages → Source = `main`, папка `/ (root)`. Свой домен — там же, в Custom domain, плюс `CNAME`-файл в корне; после смены домена заново выполнить `tools/set-domain.sh` с новым адресом.
+**Про имя репозитория.** Он назван `rallymind-site` — по старому имени продукта, сознательно, чтобы не расходиться с папкой и историей проекта. На страницах старого названия нет. В адресе GitHub Pages сегмент `rallymind-site` виден, пока этот источник не выключен. На `advantace.app` его нет.
 
-Любой другой статический хостинг (Netlify, Cloudflare Pages, nginx на Droplet) — просто скопировать содержимое папки.
+**Состояние на сейчас:** абсолютные адреса в страницах, `robots.txt` и `sitemap.xml` указывают на `https://advantace.app`. `canonical`, `og:image`, `hreflang` и JSON-LD стоят в разметке как настоящие теги. Пока DNS домена пустой, открывается прежний адрес GitHub Pages.
+
+Порядок такой: сначала `set-domain.sh`, потом commit и push, затем `tools/deploy.sh`. Публичный адрес попадает в `og:url` и `canonical`, поэтому он должен быть проставлен до того, как ссылку увидит Telegram — превью кешируется надолго.
+
+`git add -A` не потянет `preview/`, `dist/` и `.env` — они в `.gitignore`. Папки `screens/`, `fonts/` и `tools/` в репозитории намеренно: из них собираются WebP и woff2. В `dist/` они не копируются.
 
 **Доступ к репозиторию.** Авторизация — через `gh` (`brew install gh`, затем `gh auth login`), он же настраивает credential helper для HTTPS. Вариант с SSH упирается в две вещи: в аккаунте не зарегистрирован ключ, а лежащий в `~/.ssh/rshorovby-GitHub` защищён парольной фразой, которой нет в ssh-agent. Плюс `~/.ssh/config` содержит путь с пробелом без кавычек (`IdentityFile /Users/rust/.ssh/shorov.rustam-GitLab Enterprise`), из-за чего ssh отбрасывает файл целиком и ломает все хосты сразу, а не только GitHub.
 
