@@ -474,6 +474,20 @@ svg {
   color: var(--ball);
 }
 
+.hero-aside {
+  margin: 14px 0 0;
+  font-size: 14.5px;
+}
+.hero-aside a {
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.hero-aside a:hover {
+  color: #fff;
+}
+
 /* ---------- Телефон и скриншоты ---------- */
 
 .phone {
@@ -810,6 +824,17 @@ svg {
 }
 .final-cta .hero-cta {
   justify-content: center;
+}
+.final-cta .hero-note {
+  justify-content: center;
+  max-width: none;
+  margin-top: 16px;
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.66);
+}
+.final-cta .hero-aside {
+  font-size: 14.5px;
+  text-align: center;
 }
 
 /* ---------- Футер ---------- */

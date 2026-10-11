@@ -13,8 +13,8 @@
   } catch (e) {}
 })();
 </script>
-<title>AdvantAce — ИИ-разбор техники тенниса и живой комментарий тренера</title>
-<meta name="description" content="Снимаешь удар на телефон — получаешь ИИ-разбор с учётом анкеты, стажа и прошлых видео по этому удару, а штатный тренер дополняет его живым комментарием. Форхенд, бэкхенд, подача, ноги, розыгрыш.">
+<title>AdvantAce — разбор техники тенниса по видео с телефона</title>
+<meta name="description" content="Сними удар на телефон. В ответ — что чинить и какое упражнение сделать на следующей тренировке. Тренер допишет своё.">
 <meta name="theme-color" content="#17301F" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#10201A" media="(prefers-color-scheme: dark)">
 
@@ -32,8 +32,8 @@
 <meta property="og:site_name" content="AdvantAce">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:locale:alternate" content="en_US">
-<meta property="og:title" content="AdvantAce — ИИ-разбор техники тенниса и живой комментарий тренера">
-<meta property="og:description" content="ИИ-разбор с учётом твоей анкеты, стажа и прошлых видео. Плюс живой комментарий штатного тренера.">
+<meta property="og:title" content="AdvantAce — разбор техники тенниса по видео с телефона">
+<meta property="og:description" content="Короткое видео с телефона: что чинить, упражнение на тренировку и комментарий тренера.">
 
 <!-- Абсолютные адреса. Домен подставляет tools/set-domain.sh.
      Строки между маркерами — рабочий HTML, не комментарий. -->
@@ -42,7 +42,7 @@
 <meta property="og:image" content="https://advantace.app/assets/img/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="AdvantAce — ИИ-разбор техники тенниса и живой комментарий тренера">
+<meta property="og:image:alt" content="AdvantAce — разбор техники тенниса по видео с телефона">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://advantace.app/">
 
@@ -56,7 +56,7 @@
   "@type": "SoftwareApplication",
   "name": "AdvantAce",
   "url": "https://advantace.app/",
-  "description": "ИИ-разбор техники тенниса по видео с учётом анкеты, стажа и прошлых разборов. Штатный тренер дополняет разбор живым комментарием.",
+  "description": "Разбор техники тенниса по видео с телефона: что чинить, упражнение на следующую тренировку и комментарий тренера.",
   "applicationCategory": "SportsApplication",
   "operatingSystem": "Telegram, iOS",
   "inLanguage": ["ru", "en"]
@@ -89,8 +89,8 @@
         <a href="en/index.html" hreflang="en" lang="en">EN</a>
       </div>
       <a class="btn btn-primary" href="https://t.me/RallyCoachAI_bot?start=web" target="_blank" rel="noopener">
-        <span class="label-full">Открыть в Telegram</span>
-        <span class="label-short">Telegram</span>
+        <span class="label-full">Разобрать удар</span>
+        <span class="label-short">Разбор</span>
       </a>
     </div>
   </div>
@@ -114,35 +114,33 @@
 
       <div class="hero-grid">
         <div>
-          <span class="eyebrow"><span class="icon icon-ball" aria-hidden="true"></span>ИИ-разбор · теннис</span>
+          <span class="eyebrow"><span class="icon icon-ball" aria-hidden="true"></span>Теннис · разбор по видео</span>
 
-          <h1>ИИ-разбор удара, который знает твой контекст</h1>
+          <h1>Сними удар — получи рекомендации для улучшения</h1>
 
           <p class="hero-lead">
-            Снимаешь удар на телефон — модель разбирает его с учётом анкеты: уровня, стажа,
-            руки и частоты тренировок, а также прошлых видео по этому удару.
-            Штатный тренер читает разбор и дополняет его живым комментарием.
-            Следующее видео показывает, что изменилось.
+            Короткое видео с телефона. В ответ — что ломает удар и какое упражнение сделать
+            на следующей тренировке. Если этот удар уже был на видео, сравним с прошлым разом.
+            Тренер посмотрит разбор и допишет своё.
           </p>
 
           <div class="hero-cta">
-            <a class="btn btn-primary" href="https://t.me/RallyCoachAI_bot?start=web" target="_blank" rel="noopener">Открыть в Telegram</a>
-            <a class="btn btn-ghost-dark" href="https://t.me/RallyCoachAI_bot?start=web_ios" target="_blank" rel="noopener">
-              <img src="assets/img/logo-96.png" alt="" width="20" height="20" style="border-radius:6px">
-              Следить за iOS
-            </a>
+            <a class="btn btn-primary" href="https://t.me/RallyCoachAI_bot?start=web" target="_blank" rel="noopener">Разобрать удар</a>
           </div>
 
           <p class="hero-note">
             <span class="icon icon-check" aria-hidden="true"></span>
-            Разборы бесплатны в открытой бете. Приложение для iPhone — скоро.
+            Бесплатно. Откроется в Telegram.
+          </p>
+          <p class="hero-aside">
+            <a href="https://t.me/RallyCoachAI_bot?start=web_ios" target="_blank" rel="noopener">Хочу приложение на iPhone</a>
           </p>
         </div>
 
         <div class="phone">
           <div class="phone-screen">
             <img src="assets/img/screen-home_ru.webp"
-                 alt="Главная в AdvantAce: готовый разбор удара, кнопка отправки видео и ключевые шкалы прогресса"
+                 alt="Главная в AdvantAce: готовый разбор удара, кнопка отправки видео и шкалы прогресса"
                  width="1179" height="2556" fetchpriority="high" decoding="async">
           </div>
         </div>
@@ -181,13 +179,13 @@
     <div class="section-head reveal">
       <span class="kicker"><span class="icon icon-eye" aria-hidden="true"></span>Знакомо?</span>
       <h2 class="section-title">Снимаешь себя — и непонятно, что именно исправлять</h2>
-      <p class="section-lead">Три причины, по которым видео с тренировки обычно не превращается в прогресс.</p>
+      <p class="section-lead">Видео с тренировки есть почти у всех. Пользы от него обычно нет.</p>
     </div>
 
     <div class="pains reveal">
-      <p class="pain">Посмотрел своё видео и не понял, что не так: вроде похоже на то, как играют нормально.</p>
-      <p class="pain">Советы из роликов — про чужой удар. Примерить их на себя не получается.</p>
-      <p class="pain">Через месяц занятий непонятно, стало ли лучше и что вообще изменилось.</p>
+      <p class="pain">Смотришь своё видео: вроде нормально. А мяч всё равно в сетку.</p>
+      <p class="pain">Ролик на YouTube — про чужой удар. На корте выходит не то.</p>
+      <p class="pain">Месяц ходишь на тренировки и не можешь сказать, стало лучше или нет.</p>
     </div>
   </div>
 </section>
@@ -198,24 +196,24 @@
   <div class="container">
     <div class="section-head reveal">
       <span class="kicker"><span class="icon icon-ball" aria-hidden="true"></span>Как это работает</span>
-      <h2 class="section-title">Три шага, без оборудования и монтажа</h2>
+      <h2 class="section-title">Телефон и корт. Больше ничего не нужно</h2>
     </div>
 
     <div class="steps reveal">
       <article class="step">
         <span class="step-num">01</span>
-        <h3>Снимаешь 10–30 секунд</h3>
-        <p>Один удар, телефон сбоку или сзади на уровне пояса. Хватит камеры телефона — ни штатива, ни второго человека.</p>
+        <h3>Сними 10–30 секунд</h3>
+        <p>Один удар. Телефон сбоку или сзади, примерно на уровне пояса. Штатив не нужен.</p>
       </article>
       <article class="step">
         <span class="step-num">02</span>
-        <h3>Получаешь разбор</h3>
-        <p>ИИ разбирает удар с учётом твоей анкеты и прошлых видео по этому удару: что не так, почему это важно и что делать. Штатный тренер читает разбор и дополняет его живым комментарием.</p>
+        <h3>Получи разбор</h3>
+        <p>Что чинить и что сделать на ближайшей тренировке. Разбор приходит сразу. Тренер дописывает своё, обычно в тот же день.</p>
       </article>
       <article class="step">
         <span class="step-num">03</span>
-        <h3>Снимаешь тот же удар снова</h3>
-        <p>Разбор помнит твои прошлые видео, текущий фокус и повторяющиеся ошибки. Видно динамику, а не разовый совет.</p>
+        <h3>Сними тот же удар ещё раз</h3>
+        <p>Второй разбор сравнивается с первым. Видно, исправилось ли то, что просили в прошлый раз.</p>
       </article>
     </div>
   </div>
@@ -227,40 +225,40 @@
   <div class="container">
     <div class="section-head reveal">
       <span class="kicker"><span class="icon icon-target" aria-hidden="true"></span>Что внутри</span>
-      <h2 class="section-title">Не «оценка техники», а работа над конкретным ударом</h2>
-      <p class="section-lead">Продукт ведёт один удар за раз — от замечания до упражнения и следующей съёмки.</p>
+      <h2 class="section-title">Один удар за раз</h2>
+      <p class="section-lead">Берём форхенд, подачу или бэкхенд и доводим его.</p>
     </div>
 
     <div class="cards reveal">
       <article class="card">
         <span class="card-icon card-icon-court"><span class="icon icon-ai" aria-hidden="true"></span></span>
-        <h3>ИИ-разбор с контекстом</h3>
-        <p>Модель смотрит видео и знает твою анкету: уровень, стаж, руку и частоту тренировок. Это не средние советы из интернета, а разбор про твою игру.</p>
+        <h3>Разбор под тебя</h3>
+        <p>Новичку и человеку с третьего года пишем разное. Учитываем, давно ли играешь, какой рукой и как часто выходишь на корт.</p>
       </article>
       <article class="card">
         <span class="card-icon card-icon-process"><span class="icon icon-eye" aria-hidden="true"></span></span>
-        <h3>Память о прошлых разборах</h3>
-        <p>Разбор видит прошлые сессии по этому удару, твой фокус — он не меняется, пока нет улучшения, — и хронические ошибки. Поэтому он не начинается с нуля.</p>
+        <h3>Помним прошлые видео</h3>
+        <p>Если этот удар уже разбирали, смотрим, исправилось ли то, о чём говорили в прошлый раз.</p>
       </article>
       <article class="card">
         <span class="card-icon card-icon-done"><span class="icon icon-check" aria-hidden="true"></span></span>
-        <h3>Живой комментарий тренера</h3>
-        <p>Штатный тренер читает ИИ-разбор и дополняет его тем, что видно только человеку. Пока он не посмотрел, разбор помечен «На супервизии».</p>
+        <h3>Тренер дописывает своё</h3>
+        <p>Сначала разбор пишет AI. Потом тренер смотрит видео и дописывает своё. Пока он не посмотрел, его комментария в разборе нет.</p>
       </article>
       <article class="card">
         <span class="card-icon"><span class="icon icon-racket" aria-hidden="true"></span></span>
-        <h3>Шесть ударов</h3>
-        <p>Форхенд, бэкхенд, подача, у сетки, ноги, розыгрыш. Прогресс считается по каждому отдельно — подачу не сравнивают с форхендом.</p>
+        <h3>Шесть вещей, которые можно снять</h3>
+        <p>Форхенд, бэкхенд, подача, у сетки, ноги, розыгрыш. Оценки идут по каждому отдельно.</p>
       </article>
       <article class="card">
         <span class="card-icon"><span class="icon icon-ball" aria-hidden="true"></span></span>
-        <h3>Упражнения из каталога</h3>
-        <p>К замечанию прикладываются упражнения, которые можно сделать на ближайшей тренировке. С описанием и ссылкой.</p>
+        <h3>Упражнение, а не только замечание</h3>
+        <p>К каждой ошибке — что сделать на следующей тренировке.</p>
       </article>
       <article class="card">
         <span class="card-icon card-icon-done"><span class="icon icon-trend" aria-hidden="true"></span></span>
-        <h3>История и прогресс</h3>
-        <p>Оценки по ударам, изученность и уровень NTRP. Видно, что растёт, а что стоит на месте — и по какому удару мало видео.</p>
+        <h3>Видно, растёт удар или стоит</h3>
+        <p>Оценки по каждому удару и уровень NTRP. Сразу понятно, где видео ещё мало.</p>
       </article>
     </div>
 
@@ -285,7 +283,7 @@
   <div class="container">
     <div class="section-head reveal">
       <span class="kicker"><span class="icon icon-video" aria-hidden="true"></span>Экраны</span>
-      <h2 class="section-title">Как это выглядит</h2>
+      <h2 class="section-title">Как выглядит разбор</h2>
     </div>
 
     <div class="shots reveal">
@@ -293,11 +291,11 @@
         <div class="phone">
           <div class="phone-screen">
             <img src="assets/img/screen-home_ru.webp"
-                 alt="Главная в AdvantAce: готовый разбор удара и ключевые шкалы"
+                 alt="Главная в AdvantAce: последний разбор и что снимать дальше"
                  width="1179" height="2556" loading="lazy" decoding="async">
           </div>
         </div>
-        <figcaption>Главная</figcaption>
+        <figcaption>Последний разбор и что снимать дальше</figcaption>
       </figure>
 
       <figure class="shot">
@@ -308,18 +306,18 @@
                  width="1179" height="2556" loading="lazy" decoding="async">
           </div>
         </div>
-        <figcaption>Видео</figcaption>
+        <figcaption>Обрезал клип и отправил</figcaption>
       </figure>
 
       <figure class="shot">
         <div class="phone">
           <div class="phone-screen">
             <img src="assets/img/screen-result_ru.webp"
-                 alt="Разбор удара в AdvantAce: замечания ИИ и как их исправить"
+                 alt="Разбор удара в AdvantAce: что не так и как это исправить"
                  width="1179" height="2556" loading="lazy" decoding="async">
           </div>
         </div>
-        <figcaption>Разбор</figcaption>
+        <figcaption>Что не так и как исправить</figcaption>
       </figure>
     </div>
   </div>
@@ -336,44 +334,44 @@
 
     <div class="faq reveal">
       <details open>
-        <summary>Чем это отличается от ChatGPT и других ИИ-разборов?</summary>
+        <summary>Чем это отличается от ChatGPT и других AI-разборов?</summary>
         <div class="faq-body">
-          Разбор делает модель, которая знает твой контекст: анкету (уровень, стаж, руку, частоту тренировок), прошлые видео по этому удару, текущий фокус и хронические ошибки, плюс базу знаний по технике. Поверх разбора — живой комментарий штатного тренера. У ChatGPT нет ни твоей истории, ни тренера, который смотрит за разбором.
+          ChatGPT не видел твои прошлые видео и не помнит, над чем ты работаешь. Здесь разбор строится по твоим съёмкам, и его ещё смотрит тренер.
         </div>
       </details>
 
       <details>
         <summary>Нужен ли Telegram?</summary>
         <div class="faq-body">
-          Сейчас да: канал — Telegram-бот. Приложение для iPhone в разработке; там будет то же самое плюс пуши о готовом разборе и копия видео на устройстве. Оставить заявку на приложение можно в боте — нажми «Следить за iOS».
+          Пока да: всё происходит в боте. Приложение для iPhone делаем. Там придёт уведомление, когда разбор готов, и копия видео останется на телефоне. Оставить заявку можно по ссылке «Хочу приложение на iPhone».
         </div>
       </details>
 
       <details>
         <summary>Сколько ждать разбор?</summary>
         <div class="faq-body">
-          ИИ-разбор появляется сразу после загрузки видео. Комментарий тренера занимает до 24 часов — обычно быстрее. Если тренер не успевает, разбор всё равно отдаётся тебе по таймауту.
+          Разбор приходит сразу после загрузки. Комментарий тренера — обычно в тот же день, крайний срок сутки. Если тренер не успел, разбор всё равно приходит.
         </div>
       </details>
 
       <details>
         <summary>Что и как снимать?</summary>
         <div class="faq-body">
-          10–30 секунд, один удар, телефон сбоку или сзади на уровне пояса. Не нужно снимать весь розыгрыш: чем короче клип, тем точнее разбор. Дальше разбор сам подскажет, что снять следующим.
+          10–30 секунд, один удар, телефон сбоку или сзади на уровне пояса. Весь розыгрыш снимать не нужно: короткий клип разбирается точнее. Дальше подскажем, что снять следующим.
         </div>
       </details>
 
       <details>
         <summary>Сколько это стоит?</summary>
         <div class="faq-body">
-          Сейчас продукт в открытой бете, и разборы бесплатны. Когда появятся тарифы, первый разбор останется бесплатным: сначала нужно увидеть, что продукт реально даёт.
+          Пока бесплатно. Когда появятся цены, первый разбор останется бесплатным: сначала посмотришь, что получается.
         </div>
       </details>
 
       <details>
         <summary>Что происходит с моими видео?</summary>
         <div class="faq-body">
-          На нашем сервере видео не хранится: после разбора файл удаляется. В Telegram он остаётся в переписке с ботом — её можно очистить в любой момент.
+          На сервере файл удаляем сразу после разбора. В Telegram он остаётся в чате с ботом — стереть его можно в любой момент.
         </div>
       </details>
     </div>
@@ -393,16 +391,19 @@
         <line x1="400" y1="150" x2="400" y2="350"></line>
       </svg>
 
-      <h2>Сними удар — ИИ разберёт, тренер дополнит</h2>
-      <p>Открой бота, пришли клип на 10–30 секунд и выбери удар. ИИ-разбор придёт сразу, комментарий тренера — следом.</p>
+      <h2>Есть видео с тренировки? Пришли</h2>
+      <p>10–30 секунд, один удар. Разбор придёт сразу, комментарий тренера — следом.</p>
 
       <div class="hero-cta">
-        <a class="btn btn-primary" href="https://t.me/RallyCoachAI_bot?start=web" target="_blank" rel="noopener">Открыть в Telegram</a>
-        <a class="btn btn-ghost-dark" href="https://t.me/RallyCoachAI_bot?start=web_ios" target="_blank" rel="noopener">
-          <img src="assets/img/logo-96.png" alt="" width="20" height="20" style="border-radius:6px">
-          Следить за iOS
-        </a>
+        <a class="btn btn-primary" href="https://t.me/RallyCoachAI_bot?start=web" target="_blank" rel="noopener">Разобрать удар</a>
       </div>
+      <p class="hero-note">
+        <span class="icon icon-check" aria-hidden="true"></span>
+        Бесплатно. Откроется в Telegram.
+      </p>
+      <p class="hero-aside">
+        <a href="https://t.me/RallyCoachAI_bot?start=web_ios" target="_blank" rel="noopener">Хочу приложение на iPhone</a>
+      </p>
     </div>
   </div>
 </section>
